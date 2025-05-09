@@ -146,6 +146,85 @@ exports.Prisma.AccountScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CarScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  brand: 'brand',
+  type: 'type',
+  year: 'year',
+  mileage: 'mileage',
+  colors: 'colors',
+  price: 'price',
+  desc: 'desc',
+  imgs: 'imgs',
+  userId: 'userId',
+  isSold: 'isSold',
+  isFeatured: 'isFeatured',
+  isNew: 'isNew',
+  features: 'features',
+  location: 'location',
+  fuelType: 'fuelType',
+  transmission: 'transmission',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SpecsScalarFieldEnum = {
+  id: 'id',
+  capacity: 'capacity',
+  hp: 'hp',
+  torque: 'torque',
+  doors: 'doors',
+  acceleration: 'acceleration',
+  zeroToSixty: 'zeroToSixty',
+  topSpeed: 'topSpeed',
+  length: 'length',
+  width: 'width',
+  height: 'height',
+  weight: 'weight',
+  carId: 'carId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SellerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  img: 'img',
+  phone: 'phone',
+  email: 'email',
+  website: 'website',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  postalCode: 'postalCode',
+  carId: 'carId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TestReqScalarFieldEnum = {
+  id: 'id',
+  carId: 'carId',
+  userId: 'userId',
+  date: 'date',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MsgScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  content: 'content',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -160,11 +239,43 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.CarType = exports.$Enums.CarType = {
+  SEDAN: 'SEDAN',
+  SUV: 'SUV',
+  TRUCK: 'TRUCK',
+  COUPE: 'COUPE',
+  CONVERTIBLE: 'CONVERTIBLE',
+  HATCHBACK: 'HATCHBACK',
+  WAGON: 'WAGON',
+  VAN: 'VAN'
+};
 
+exports.FuelType = exports.$Enums.FuelType = {
+  PETROL: 'PETROL',
+  DIESEL: 'DIESEL',
+  ELECTRIC: 'ELECTRIC',
+  HYBRID: 'HYBRID'
+};
+
+exports.Transmission = exports.$Enums.Transmission = {
+  MANUAL: 'MANUAL',
+  AUTOMATIC: 'AUTOMATIC'
+};
+
+exports.ReqStatus = exports.$Enums.ReqStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Account: 'Account'
+  Account: 'Account',
+  Car: 'Car',
+  Specs: 'Specs',
+  Seller: 'Seller',
+  TestReq: 'TestReq',
+  Msg: 'Msg'
 };
 
 /**
