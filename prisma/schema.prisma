@@ -151,6 +151,8 @@ enum CarType {
   HATCHBACK
   WAGON
   VAN
+  PICKUP
+  SPORTS
 }
 
 enum FuelType {
