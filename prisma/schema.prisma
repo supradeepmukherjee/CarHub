@@ -79,10 +79,11 @@ model Car {
 
 model Specs {
   id           String   @id @default(uuid())
-  capacity     Int?
+  engineCapacity     Int?
   hp           Int?
   torque       Int?
   doors        Int?
+  seats        Int?
   acceleration Float?
   zeroToSixty  Float?
   topSpeed     Int?

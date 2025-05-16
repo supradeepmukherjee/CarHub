@@ -1,5 +1,8 @@
 'use server'
 
+import { ai } from "@/lib/ai"
+import { extractJSON } from "@/lib/utils"
+
 export const generate = async (name: string, desc: string) => {
     const imgPath = `${name}.jpg`
     try {
@@ -24,4 +27,13 @@ export const generate = async (name: string, desc: string) => {
         console.log(err)
         throw new Error('Failed to Generate Image')
     }
+}
+
+export const autoGenerate = async (name: string) => {
+    const res = await ai.generateCarAgent(name)
+    return extractJSON(res)
+}
+
+export const search = async (t: string) => {
+
 }

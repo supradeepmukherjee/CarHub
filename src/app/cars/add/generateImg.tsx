@@ -16,6 +16,7 @@ import NextImg from 'next/image'
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import ErrorMsg from "./errorMsg"
 
 const GenerateImg = () => {
   const { addImg } = useImgs()
@@ -111,22 +112,14 @@ const GenerateImg = () => {
             Description
           </Label>
           <Textarea id='desc' placeholder="Describe your Dream Car" rows={6} {...register('desc')} />
-          {errors.desc &&
-            <p className="text-sm text-red-500">
-              {errors.desc.message}
-            </p>
-          }
+          {errors.desc && <ErrorMsg t={errors.desc.message!} />}
         </div>
         <div className="space-y-2">
           <Label htmlFor="name">
             File Name
           </Label>
           <Input id="name" placeholder="Enter a Name for the generated image" {...register('name')} />
-          {errors.name &&
-            <p className="text-sm text-red-500">
-              {errors.name.message}
-            </p>
-          }
+          {errors.name && <ErrorMsg t={errors.name.message!} />}
         </div>
         <Button disabled={generating}>
           {generating ? 'Generating' : 'Generate Image'}

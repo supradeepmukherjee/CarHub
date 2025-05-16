@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute={'class'}>
-          <ImageKitProvider urlEndpoint="https://ik.imagekit.io/83jhglbgl/CarHub">
+          <ImageKitProvider urlEndpoint={process.env.NEXT_PUBLIC_IMGKIT_URL}>
             <Header />
             {children}
             <Toaster />
