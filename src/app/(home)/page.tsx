@@ -8,6 +8,7 @@ import Filters from './filters'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
+import { getCars } from '@/actions/car'
 
 type Props = {
   searchParams:
@@ -23,7 +24,7 @@ const Page = ({ searchParams }: Props) => (
       <div className="absolute inset-0 z-0">
         <Image
           alt='hero card'
-          src={`/cover.avif`}
+          src={`/CarHub/cover.avif`}
           fill
           className='object-cover brightness-50'
         />
@@ -76,7 +77,7 @@ const Page = ({ searchParams }: Props) => (
         <div className="flex gap-2">
           <Filters />
           <Button asChild>
-            <Link href='/cars/add'>
+            <Link href='/add'>
               <Plus className='mr-2 h-4 w-4' /> Add Listing
             </Link>
           </Button>
@@ -114,8 +115,9 @@ const Page = ({ searchParams }: Props) => (
 )
 
 const Featured = async ({ searchParams }: Props) => {
-  const { page = '1', type = 'all' } = await searchParams
-  return sampleCars.map(c => (
+  const { page = 1, type = 'all' } = await searchParams
+  const cars = await getCars(Number(page), type)
+  return cars.map(c => (
     <Card key={c.id} className='overflow-hidden'>
       <div className="relative h-48">
         <Image src={c.imgs[0]} alt={c.name} fill className='object-cover' />
@@ -135,12 +137,12 @@ const Featured = async ({ searchParams }: Props) => {
           </p>
         </div>
         <div className="flex gap-2 mt-4">
-          <Button className='w-full' asChild>{/* try without asChild */}
+          <Button className='w-[50%]' asChild>{/* try without asChild */}
             <Link href={`/cars/${c.id}`}>
               View Details
             </Link>
           </Button>
-          <Button className='w-full' asChild variant='outline'>{/* try without asChild */}
+          <Button className='w-[50%]' asChild variant='outline'>{/* try without asChild */}
             <Link href={`/contact/${c.id}`}>
               Contact Seller
             </Link>
@@ -164,87 +166,6 @@ const features = [
     title: 'Quality Guarantee',
     desc: 'Every vehicle undergoes a rigorous inspection process'
   },
-]
-
-const sampleCars = [
-  {
-    id: "c1a1e5b2-8d9f-4b3e-9214-27c3bcb9d001",
-    name: "Civic LX",
-    brand: "Honda",
-    type: "SEDAN",
-    year: 2020,
-    mileage: 25000,
-    colors: ["Black", "Silver"],
-    price: 22000.0,
-    desc: "Reliable and fuel-efficient sedan with excellent handling.",
-    imgs: ["https://example.com/civic-front.jpg", "https://example.com/civic-side.jpg"],
-    userId: "user-001",
-    isSold: false,
-    isFeatured: true,
-    isNew: false,
-    features: ["Bluetooth", "Backup Camera", "Cruise Control"],
-    location: "Bangalore",
-    fuelType: "PETROL",
-    transmission: "AUTOMATIC",
-    specs: null,
-    seller: null,
-    createdAt: new Date("2023-05-10T08:00:00Z"),
-    updatedAt: new Date("2024-04-15T08:00:00Z"),
-    savedBy: [],
-    reqs: []
-  },
-  {
-    id: "d2f9a6b7-53fc-41e1-ae88-9f6e3bcb2d12",
-    name: "Model Y",
-    brand: "Tesla",
-    type: "SUV",
-    year: 2022,
-    mileage: 12000,
-    colors: ["White", "Red"],
-    price: 54000.0,
-    desc: "Electric SUV with autopilot and advanced safety features.",
-    imgs: ["https://example.com/modely-front.jpg", "https://example.com/modely-interior.jpg"],
-    userId: "user-002",
-    isSold: false,
-    isFeatured: false,
-    isNew: true,
-    features: ["Autopilot", "Panoramic Roof", "Touchscreen"],
-    location: "Delhi",
-    fuelType: "ELECTRIC",
-    transmission: "AUTOMATIC",
-    specs: null,
-    seller: null,
-    createdAt: new Date("2023-08-01T08:00:00Z"),
-    updatedAt: new Date("2024-04-20T08:00:00Z"),
-    savedBy: [],
-    reqs: []
-  },
-  {
-    id: "a7fbc239-cf74-40ef-8a6f-3c1dd93174fc",
-    name: "Fortuner",
-    brand: "Toyota",
-    type: "SUV",
-    year: 2021,
-    mileage: 30000,
-    colors: ["Gray", "Black"],
-    price: 42000.0,
-    desc: "Rugged SUV perfect for off-road and family travel.",
-    imgs: ["https://example.com/fortuner-exterior.jpg", "https://example.com/fortuner-interior.jpg"],
-    userId: "user-003",
-    isSold: true,
-    isFeatured: false,
-    isNew: false,
-    features: ["4WD", "Navigation", "Airbags"],
-    location: "Mumbai",
-    fuelType: "DIESEL",
-    transmission: "MANUAL",
-    specs: null,
-    seller: null,
-    createdAt: new Date("2023-01-15T08:00:00Z"),
-    updatedAt: new Date("2024-02-20T08:00:00Z"),
-    savedBy: [],
-    reqs: []
-  }
 ]
 
 export default Page

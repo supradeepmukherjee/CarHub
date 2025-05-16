@@ -58,3 +58,20 @@ export const addCar = async (data: AddSchema) => {
     })
     revalidatePath('/')
 }
+
+export const getCars = unstable_cache(async (
+    pg: number = 1,
+    type: string = 'all'
+) => {
+    const limit = 6
+    const skip = (pg - 1) * limit
+    const types = type.split(',').filter(Boolean).map(t => t.toUpperCase())
+    const isTypeValid = types.some(t => types.includes(t) || t === 'all')
+    const cars = await prisma.car.findMany({
+        skip,
+        take: limit,
+        where: { ...(type !== 'all' && isTypeValid && { type: { in: types } }) },
+        orderBy: { createdAt: 'desc' }
+    })
+    return cars
+}, [], { revalidate: 3600 * 24 })
