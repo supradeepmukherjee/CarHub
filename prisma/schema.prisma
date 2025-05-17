@@ -133,9 +133,9 @@ model TestReq {
 
 model Msg {
   id        String   @id @default(uuid())
-  name      String
-  email     String
-  phone     String
+  name      String?
+  email     String?
+  phone     String?
   content   String
   userId    String
   receiver  User     @relation(fields: [userId], references: [id])

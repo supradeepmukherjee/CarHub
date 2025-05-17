@@ -48,3 +48,13 @@ export const addSchema = z.object({
 })
 
 export type AddSchema = z.infer<typeof addSchema>
+
+export const contactSchema = z.object({
+    carId: z.string().nonempty('Car ID is required'),
+    content: z.string().nonempty('Message is required'),
+    name: z.string().optional(),
+    email: z.string().email('Invalid Email ID').optional(),
+    phone: z.string().optional()
+})
+
+export type ContactSchema = z.infer<typeof contactSchema>

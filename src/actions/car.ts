@@ -2,10 +2,11 @@
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
-import { AddSchema } from "@/lib/zod"
+import { addSchema, AddSchema } from "@/lib/zod"
 import { revalidatePath, unstable_cache } from "next/cache"
 
 export const addCar = async (data: AddSchema) => {
+    addSchema.parse(data)
     const session = await auth()
     const authUser = session?.user
     if (!authUser) throw new Error('User not Authenticated')
@@ -91,9 +92,9 @@ export const getCarByID = unstable_cache(async (id: string) => {
 
 export const getSellerInfo = unstable_cache(async (carId: string) => {
     if (!carId) throw new Error('Car ID not provided')
-    const car = await prisma.seller.findUnique({ where: { carId } })
-    if (!car) throw new Error('Car Not Found')
-    return car
+    const seller = await prisma.seller.findUnique({ where: { carId } })
+    if (!seller) throw new Error('Seller Not Found')
+    return seller
 }, [], { revalidate: 3600 * 24 })
 
 export const scheduleDrive = async (

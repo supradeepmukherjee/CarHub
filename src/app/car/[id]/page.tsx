@@ -307,7 +307,7 @@ const Sidebar = async ({ params }: Props) => {
                 alt={seller.name}
                 src={'https://ik.imagekit.io/83jhglbgl/default-image.jpg'} className="rounded-full object-cover"
                 width={200}
-                height={400}
+                height={200}
               />
             </div>
             <div className="">
