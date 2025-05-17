@@ -1,5 +1,6 @@
 'use client'
 
+import { star } from "@/actions/car"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { HeartIcon, Share2Icon } from "lucide-react"
@@ -34,7 +35,7 @@ const CoverBtn = (
       </Button>
       <form action={async () => {
         startTransition(true)
-
+        await star(carID)
       }}>
         <Button variant='outline' size='icon'>
           <HeartIcon className={cn('h-5 w-5', isSaved ? 'fill-primary' : '')} />

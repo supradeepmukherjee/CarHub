@@ -131,7 +131,7 @@ export const scheduleDrive = async (
         },
         update: { date }
     })
-    revalidatePath(`/cars/` + carId)
+    revalidatePath(`/car/` + carId)
     return { success: true }
     // const existingReq = await prisma.testReq.findUnique({
     //     where: {
@@ -159,4 +159,34 @@ export const scheduleDrive = async (
     //             userId: user.id
     //         }
     // })
+}
+
+export const star = async (carId: string) => {
+    if (!carId) throw new Error('Car ID not provided')
+    const session = await auth()
+    if (!session?.user) throw new Error('User not Authenticated')
+    const user = await prisma.user.findUnique({
+        where: { email: session.user.email! },
+        select: { id: true }
+    })
+    if (!user) throw new Error('User not Found')
+    const car = await prisma.car.findUnique({
+        where: { id: carId },
+        select: {
+            id: true,
+            savedBy: { select: { id: true } }
+        }
+    })
+    if (!car) throw new Error('Car not Found')
+    await prisma.car.update({
+        data: {
+            savedBy:
+                car.savedBy.some(s => s.id === user.id) ?
+                    { disconnect: { id: user.id } }
+                    :
+                    { connect: { id: user.id } }
+        },
+        where: { id: carId }
+    })
+    revalidatePath(`/car/` + carId)
 }
