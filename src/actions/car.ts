@@ -190,3 +190,11 @@ export const star = async (carId: string) => {
     })
     revalidatePath(`/car/` + carId)
 }
+
+export const getAllCars = unstable_cache(async () => {
+    const cars = await prisma.car.findMany({
+        orderBy: { createdAt: 'desc' },
+        select: { id: true }
+    })
+    return cars
+}, ['cars'], { revalidate: 3600 * 24 })

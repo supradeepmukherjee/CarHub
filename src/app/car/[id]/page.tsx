@@ -17,6 +17,10 @@ import { PiEngineFill, PiSeatFill } from 'react-icons/pi'
 import CoverBtn from "./coverBtn"
 import TestDrive from "./testDrive"
 
+export async function generateStaticParams() {
+  const cars = await getAllCars()
+  return cars.map(({ id }) => ({ id }))
+}
 
 type Props = { params: Promise<{ id?: string }> }
 
