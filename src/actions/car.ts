@@ -75,3 +75,23 @@ export const getCars = unstable_cache(async (
     })
     return cars
 }, [], { revalidate: 3600 * 24 })
+
+export const getCarByID = unstable_cache(async (id: string) => {
+    if (!id) throw new Error('Car ID not provided')
+    const car = await prisma.car.findUnique({
+        where: { id },
+        include: {
+            specs: true,
+            savedBy: { select: { id: true } }
+        }
+    })
+    if (!car) throw new Error('Car Not Found')
+    return car
+}, [], { revalidate: 3600 * 24 })
+
+export const getSellerInfo = unstable_cache(async (carId: string) => {
+    if (!carId) throw new Error('Car ID not provided')
+    const car = await prisma.seller.findUnique({ where: { carId } })
+    if (!car) throw new Error('Car Not Found')
+    return car
+}, [], { revalidate: 3600 * 24 })

@@ -138,7 +138,7 @@ const Featured = async ({ searchParams }: Props) => {
         </div>
         <div className="flex gap-2 mt-4">
           <Button className='w-[50%]' asChild>{/* try without asChild */}
-            <Link href={`/cars/${c.id}`}>
+            <Link href={`/car/${c.id}`}>
               View Details
             </Link>
           </Button>
