@@ -95,3 +95,68 @@ export const getSellerInfo = unstable_cache(async (carId: string) => {
     if (!car) throw new Error('Car Not Found')
     return car
 }, [], { revalidate: 3600 * 24 })
+
+export const scheduleDrive = async (
+    { carId, date }
+        :
+        {
+            carId: string
+            date: Date
+        }
+) => {
+    if (!carId || !date) throw new Error('Car ID & Date are required')
+    const session = await auth()
+    if (!session?.user) throw new Error('User not Authenticated')
+    const user = await prisma.user.findUnique({
+        where: { email: session.user.email! },
+        select: { id: true }
+    })
+    if (!user) throw new Error('User not Found')
+    const car = await prisma.car.findUnique({
+        where: { id: carId },
+        select: { id: true }
+    })
+    if (!car) throw new Error('Car not Found')
+    await prisma.testReq.upsert({
+        where: {
+            carId_userId: {
+                carId,
+                userId: user.id
+            }
+        },
+        create: {
+            date,
+            carId,
+            userId: user.id
+        },
+        update: { date }
+    })
+    revalidatePath(`/cars/` + carId)
+    return { success: true }
+    // const existingReq = await prisma.testReq.findUnique({
+    //     where: {
+    //         carId_userId: {
+    //             carId,
+    //             userId: user.id
+    //         }
+    //     }
+    // })
+    // if (existingReq)
+    //     await prisma.testReq.update({
+    //         data: { date },
+    //         where: {
+    //             carId_userId: {
+    //                 carId,
+    //                 userId: user.id
+    //             }
+    //         }
+    //     })
+    // else
+    //     await prisma.testReq.create({
+    //         data: {
+    //             date,
+    //             carId,
+    //             userId: user.id
+    //         }
+    // })
+}

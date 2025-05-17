@@ -15,6 +15,7 @@ import { Suspense } from "react"
 import { FaDoorOpen, FaWrench } from 'react-icons/fa'
 import { PiEngineFill, PiSeatFill } from 'react-icons/pi'
 import CoverBtn from "./coverBtn"
+import TestDrive from "./testDrive"
 
 
 type Props = { params: Promise<{ id?: string }> }
@@ -325,7 +326,7 @@ const Sidebar = async ({ params }: Props) => {
               Contact Seller
             </Button>
           </Link>
-
+          <TestDrive carId={id} />
         </CardContent>
       </Card>
     </div>
