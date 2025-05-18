@@ -423,7 +423,7 @@ const AddCar = () => {
               </Label>
               <div className="flex items-center gap-2">
                 <Input id='img' placeholder="Enter the URL of the image (direct link image path)" />
-                <Button type="button" onClick={() => addImg()}>
+                <Button type="button" onClick={() => addImg('')}>
                   Add
                 </Button>
               </div>

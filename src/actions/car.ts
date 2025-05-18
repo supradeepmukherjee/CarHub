@@ -66,7 +66,7 @@ export const getCars = unstable_cache(async (
 ) => {
     const limit = 6
     const skip = (pg - 1) * limit
-    const types = type.split(',').filter(Boolean).map(t => t.toUpperCase())
+    const types = type.split(',').filter(Boolean).map(t => t.toUpperCase())as []
     const isTypeValid = types.some(t => types.includes(t) || t === 'all')
     const cars = await prisma.car.findMany({
         skip,
