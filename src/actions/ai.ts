@@ -1,7 +1,7 @@
 'use server'
 
 import { ai } from "@/lib/ai"
-import { extractJSON } from "@/lib/utils"
+import { carNotFound, extractJSON } from "@/lib/utils"
 
 export const generate = async (name: string, desc: string) => {
     const imgPath = `${name}.jpg`
@@ -35,5 +35,7 @@ export const autoGenerate = async (name: string) => {
 }
 
 export const search = async (t: string) => {
-
+    const res = await ai.searchAgent(t)
+    if (carNotFound(res)) throw new Error('No Car Found')
+    return res
 }

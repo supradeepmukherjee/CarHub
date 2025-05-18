@@ -1,5 +1,6 @@
 'use client'
 
+import { search } from "@/actions/ai"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -11,19 +12,32 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { SearchIcon, SmileIcon } from "lucide-react"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { FormEvent, useState } from "react"
+import { toast } from "sonner"
+import { string } from "zod"
 
 const Search = () => {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [desc, setDesc] = useState('')
-  const handleSubmit = async () => {
+  const router = useRouter()
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!desc || desc.trim() === '') return toast.error('Please type something first')
     setLoading(true)
     try {
-
+      const res: 'No Car Found' | 'Error generating car search' | string = await search(desc)
+      const id = string().parse(res)
+      toast.success('WOW! A car has matched your search.')
+      router.replace('/car/' + id)
+      setOpen(false)
     } catch (err) {
       console.log(err)
-    } finally {
+      if(err instanceof Error) toast.error('Sorry! No Car Found.')
+      else toast.error('OOPS! Something went wrong.')
+  } finally {
+      setDesc('')
       setLoading(false)
     }
   }

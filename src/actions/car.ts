@@ -193,9 +193,6 @@ export const star = async (carId: string) => {
 }
 
 export const getAllCars = unstable_cache(async () => {
-    const cars = await prisma.car.findMany({
-        orderBy: { createdAt: 'desc' },
-        select: { id: true }
-    })
+    const cars = await prisma.car.findMany({ orderBy: { createdAt: 'desc' } })
     return cars
 }, ['cars'], { revalidate: 3600 * 24 })
